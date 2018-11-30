@@ -77,15 +77,11 @@ function createMap(earthquakes) {
 
 
     function getColor(d) {
-        return d < 1 ? 'rgb(255,255,255)' :
-            d < 2 ? 'rgb(255,225,225)' :
-            d < 3 ? 'rgb(255,195,195)' :
-            d < 4 ? 'rgb(255,165,165)' :
-            d < 5 ? 'rgb(255,135,135)' :
-            d < 6 ? 'rgb(255,105,105)' :
-            d < 7 ? 'rgb(255,75,75)' :
-            d < 8 ? 'rgb(255,45,45)' :
-            d < 9 ? 'rgb(255,15,15)' :
+        return d < 1 ? 'rgb(0,229,63)' :
+            d < 2 ? 'rgb(162,213,0)' :
+            d < 3 ? 'rgb(210,205,0)' :
+            d < 4 ? 'rgb(202,93,0)' :
+            d < 5 ? 'rgb(194,0,10)' :
             'rgb(255,0,0)';
     }
 
@@ -95,7 +91,7 @@ function createMap(earthquakes) {
     legend.onAdd = function(map) {
 
         var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 1, 2, 3, 4, 5, 6, 7, 8],
+            grades = [0, 1, 2, 3, 4, 5],
             labels = [];
 
         div.innerHTML += 'Magnitude<br><hr>'
@@ -112,16 +108,6 @@ function createMap(earthquakes) {
 
     legend.addTo(myMap);
 
-    function getColorFor(str) { // java String#hashCode
-        var hash = 0;
-        for (var i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        var red = (hash >> 24) & 0xff;
-        var grn = (hash >> 16) & 0xff;
-        var blu = (hash >> 8) & 0xff;
-        return 'rgb(' + red + ',' + grn + ',' + blu + ')';
-    }
     var timelineControl;
 
     function onLoadData(data) {
@@ -129,7 +115,7 @@ function createMap(earthquakes) {
             style: function(data) {
                 return {
                     stroke: false,
-                    color: getColorFor(data.properties.name),
+                    color: getColor(data.properties.mag),
                     fillOpacity: 0.5
                 }
             },
